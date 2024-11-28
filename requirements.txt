@@ -4,3 +4,4 @@ pandas
 pydeck
 streamlit
 mysql-connector-python
+workalendar
