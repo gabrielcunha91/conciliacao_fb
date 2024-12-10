@@ -23,6 +23,17 @@ INNER JOIN T_EMPRESAS te ON (tefz.ID_LOJA_ZIG = te.ID_ZIGPAY)
 ORDER BY te.NOME_FANTASIA asc, tefz.ID DESC
 """
 
+GET_ZIG_FATURAMENTO = """
+SELECT
+tzf.FK_LOJA as 'ID_Casa',
+te.NOME_FANTASIA as 'Casa', 
+tzf.`DATA` as 'Data_Venda',
+tzf.VALOR as 'Valor',
+tzf.TIPO_PAGAMENTO as 'Tipo_Pagamento'
+FROM T_ZIG_FATURAMENTO tzf 
+LEFT JOIN T_EMPRESAS te ON (tzf.FK_LOJA = te.ID)
+WHERE tzf.`DATA` >= '2024-06-01'
+"""
 
 GET_PARCELAS_RECEITAS_EXTRAORDINARIAS = """
 SELECT 
