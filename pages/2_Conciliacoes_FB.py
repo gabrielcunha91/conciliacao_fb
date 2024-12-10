@@ -4,6 +4,7 @@ import datetime
 import calendar
 from utils.functions.general_functions import *
 from utils.queries import *
+from workalendar.america import Brazil
 
 st.set_page_config(
     page_title="Conciliacao_FB",
@@ -74,6 +75,19 @@ else:
     df_extrato_zig_filtrada = df_extrato_zig_filtrada
 
 st.dataframe(df_extrato_zig_filtrada, use_container_width=True, hide_index=True)
+
+st.divider()
+
+## Zig_Faturamento
+st.subheader("Zig Faturamento")
+df_zig_faturam = st.session_state["df_zig_faturam"]
+df_zig_faturam_filtrada = df_zig_faturam[df_zig_faturam['ID_Casa'] == id_casa]
+if able_date_filter:
+    df_zig_faturam_filtrada = df_zig_faturam_filtrada[(df_zig_faturam_filtrada["Data_Venda"] >= start_date) & (df_zig_faturam_filtrada["Data_Venda"] <= end_date)]
+else:    
+    df_zig_faturam_filtrada = df_zig_faturam_filtrada
+
+st.dataframe(df_zig_faturam_filtrada, use_container_width=True, hide_index=True)
 
 st.divider()
 
@@ -175,6 +189,9 @@ if st.button('Atualizar Planilha Excel'):
   sheet_name_zig = 'df_extrato_zig'
   export_to_excel(df_extrato_zig_filtrada, sheet_name_zig, excel_filename)
 
+  sheet_name_zig = 'df_zig_faturam'
+  export_to_excel(df_zig_faturam_filtrada, sheet_name_zig, excel_filename)  
+
   sheet_name_view_parc_agrup = 'view_parc_agrup'
   export_to_excel(df_parc_receit_extr_filtrada, sheet_name_view_parc_agrup, excel_filename)
 
@@ -198,6 +215,7 @@ if st.button('Atualizar Planilha Excel'):
 
   sheet_name_ajustes_conciliacao = 'df_ajustes_conciliaco'
   export_to_excel(df_ajustes_conciliacao_filtrada, sheet_name_ajustes_conciliacao, excel_filename)
+  
   
   st.success('Arquivo atualizado com sucesso!')
 
