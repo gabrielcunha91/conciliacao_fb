@@ -89,6 +89,15 @@ def run():
         return df_extrato_zig
     df_extrato_zig = extrato_zig()
 
+    def zig_faturamento():
+        result, column_names = execute_query(GET_ZIG_FATURAMENTO, conn_fb)
+        df_zig_faturam = pd.DataFrame(result, columns=column_names)   
+
+        df_zig_faturam['Data_Venda'] = pd.to_datetime(df_zig_faturam['Data_Venda']) 
+
+        return df_zig_faturam
+    df_zig_faturam = zig_faturamento()    
+
     def parcelas_receit_extr():
         result, column_names = execute_query(GET_PARCELAS_RECEITAS_EXTRAORDINARIAS, conn_fb)
         df_parc_receit_extr = pd.DataFrame(result, columns=column_names)   
@@ -175,6 +184,9 @@ def run():
 
     if "df_extrato_zig" not in st.session_state:
         st.session_state["df_extrato_zig"] = df_extrato_zig
+
+    if "df_zig_faturam" not in st.session_state:
+        st.session_state["df_zig_faturam"] = df_zig_faturam
 
     if "df_parc_receit_extr" not in st.session_state:
         st.session_state["df_parc_receit_extr"] = df_parc_receit_extr
