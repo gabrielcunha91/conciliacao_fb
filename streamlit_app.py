@@ -138,7 +138,7 @@ def run():
         result, column_names = execute_query(GET_EXTRATOS_BANCARIOS, conn_fb)
         df_extratos_bancarios = pd.DataFrame(result, columns=column_names)   
 
-        df_extratos_bancarios['Data_Transacao'] = pd.to_datetime(df_extratos_bancarios['Data_Transacao'], errors='coerce').dt.date  
+        df_extratos_bancarios['Data_Transacao'] = pd.to_datetime(df_extratos_bancarios['Data_Transacao'], errors='coerce')
 
         return df_extratos_bancarios
     df_extratos_bancarios = extratos_bancarios()     
