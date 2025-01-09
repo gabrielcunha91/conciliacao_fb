@@ -38,7 +38,7 @@ start_of_three_months_ago = datetime.datetime(year, month_sub_3, 1)
 
 
 date_input = st.date_input("Período",
-                           (start_of_three_months_ago, this_month_this_year),
+                           (jan_this_year, this_month_this_year),
                            min_value=jan_last_year,
                            max_value=dec_this_year,
                            format="DD/MM/YYYY"
