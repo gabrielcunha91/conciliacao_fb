@@ -45,6 +45,7 @@ tre.DATA_OCORRENCIA as 'Data_Ocorrencia',
 vpa.DATA_VENCIMENTO as 'Vencimento_Parcela',
 vpa.DATA_RECEBIMENTO as 'Recebimento_Parcela',
 vpa.VALOR_PARCELA as 'Valor_Parcela',
+tre.NUM_DOCUMENTACAO as 'Doc_NF',
 trec2.CONCAT_CATEGORIA_CLASSIFICACAO as 'Categoria_Class'
 FROM View_Parcelas_Agrupadas vpa
 INNER JOIN T_EMPRESAS te ON (vpa.FK_EMPRESA = te.ID)
