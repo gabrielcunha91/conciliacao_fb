@@ -128,6 +128,7 @@ GET_CUSTOS_BLUEME_COM_PARCELAMENTO = """
     tdr.VALOR_LIQUIDO as 'Valor_Liquido',
     STR_TO_DATE(tdr.LANCAMENTO, '%Y-%m-%d') as 'Data_Lancamento',
     tfdp.DESCRICAO as 'Forma_Pagamento',
+    tdr.NF as 'Doc_NF',
     tccg.DESCRICAO as 'Class_Cont_1',
     tccg2.DESCRICAO as 'Class_Cont_2',
     tscd.DESCRICAO as 'Status_Conf_Document',
