@@ -205,8 +205,8 @@ te.NOME_FANTASIA as 'Casa_Saida',
 te2.ID as 'ID_Casa_Entrada',
 te2.NOME_FANTASIA as 'Casa_Entrada',
 tm.VALOR as 'Valor',
+tm.TAG_FATURAM_ZIG as 'Tag_Faturam_Zig',
 tm.OBSERVACOES as 'Observacoes'
-tm.TAG_FATURAM_ZIG as 'Tag_Faturam_Zig'
 FROM T_MUTUOS tm 
 LEFT JOIN T_EMPRESAS te ON (tm.FK_LOJA_SAIDA = te.ID)
 LEFT JOIN T_EMPRESAS te2 ON (tm.FK_LOJA_ENTRADA = te2.ID)
