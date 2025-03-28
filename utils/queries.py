@@ -1,38 +1,74 @@
 
 
 GET_CASAS = """
+WITH empresas_normalizadas AS (
+  SELECT
+    CASE 
+      WHEN ID IN (161, 162) THEN 149
+      ELSE ID
+    END AS ID_Casa_Normalizada,
+    NOME_FANTASIA,
+    FK_GRUPO_EMPRESA
+  FROM T_EMPRESAS
+)
 SELECT
-te.ID as 'ID_Casa',
-te.NOME_FANTASIA as 'Casa'
-FROM T_EMPRESAS te
+  te.ID_Casa_Normalizada AS ID_Casa,
+  te2.NOME_FANTASIA AS Casa
+FROM empresas_normalizadas te
+LEFT JOIN T_EMPRESAS te2 ON te.ID_Casa_Normalizada = te2.ID
 WHERE te.FK_GRUPO_EMPRESA = 100
-ORDER BY te.NOME_FANTASIA 
+GROUP BY te.ID_Casa_Normalizada, te2.NOME_FANTASIA
+ORDER BY te2.NOME_FANTASIA
 """
 
 GET_EXTRATO_ZIG = """
+WITH extrato_normalizado AS (
+  SELECT
+    ID AS ID_Extrato,
+    CASE 
+      WHEN ID_LOJA_ZIG IN (161, 162) THEN 149
+      ELSE ID_LOJA_ZIG
+    END AS ID_Loja_Normalizada,
+    DESCRICAO,
+    DATA_LIQUIDACAO,
+    DATA_TRANSACAO,
+    VALOR
+  FROM T_EXTRATO_FINANCEIRO_ZIG
+)
 SELECT 
-tefz.ID as 'ID_Extrato',
-te.ID as 'ID_Casa',
-te.NOME_FANTASIA as 'Casa',
-tefz.DESCRICAO as 'Descricao',
-tefz.DATA_LIQUIDACAO as 'Data_Liquidacao',
-tefz.DATA_TRANSACAO as 'Data_Transacao',
-tefz.VALOR as 'Valor'
-FROM T_EXTRATO_FINANCEIRO_ZIG tefz 
-INNER JOIN T_EMPRESAS te ON (tefz.ID_LOJA_ZIG = te.ID_ZIGPAY)
-ORDER BY te.NOME_FANTASIA asc, tefz.DATA_LIQUIDACAO desc
+  en.ID_Extrato,
+  te.ID AS ID_Casa,
+  te.NOME_FANTASIA AS Casa,
+  en.DESCRICAO AS Descricao,
+  en.DATA_LIQUIDACAO AS Data_Liquidacao,
+  en.DATA_TRANSACAO AS Data_Transacao,
+  en.VALOR AS Valor
+FROM extrato_normalizado en
+INNER JOIN T_EMPRESAS te ON en.ID_Loja_Normalizada = te.ID_ZIGPAY
+ORDER BY te.NOME_FANTASIA ASC, en.DATA_LIQUIDACAO DESC
 """
 
 GET_ZIG_FATURAMENTO = """
+WITH faturamento_normalizado AS (
+  SELECT
+    CASE 
+      WHEN FK_LOJA IN (161, 162) THEN 149
+      ELSE FK_LOJA
+    END AS ID_Casa,
+    DATA,
+    VALOR,
+    TIPO_PAGAMENTO
+  FROM T_ZIG_FATURAMENTO
+  WHERE DATA >= '2024-06-01'
+)
 SELECT
-tzf.FK_LOJA as 'ID_Casa',
-te.NOME_FANTASIA as 'Casa', 
-tzf.`DATA` as 'Data_Venda',
-tzf.VALOR as 'Valor',
-tzf.TIPO_PAGAMENTO as 'Tipo_Pagamento'
-FROM T_ZIG_FATURAMENTO tzf 
-LEFT JOIN T_EMPRESAS te ON (tzf.FK_LOJA = te.ID)
-WHERE tzf.`DATA` >= '2024-06-01'
+  fn.ID_Casa,
+  te.NOME_FANTASIA AS Casa,
+  fn.DATA AS Data_Venda,
+  fn.VALOR AS Valor,
+  fn.TIPO_PAGAMENTO AS Tipo_Pagamento
+FROM faturamento_normalizado fn
+LEFT JOIN T_EMPRESAS te ON fn.ID_Casa = te.ID
 """
 
 GET_PARCELAS_RECEITAS_EXTRAORDINARIAS = """
