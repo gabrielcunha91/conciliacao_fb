@@ -26,7 +26,7 @@ WITH extrato_normalizado AS (
   SELECT
     ID AS ID_Extrato,
     CASE 
-      WHEN ID_LOJA_ZIG IN (161, 162) THEN 149
+      WHEN ID_LOJA_ZIG IN ('95a1ebd7-3da4-4121-a4eb-f9add8caa749', '544ef5bf-18b2-4081-977c-7733f0d6a8b8') THEN 149
       ELSE ID_LOJA_ZIG
     END AS ID_Loja_Normalizada,
     DESCRICAO,
