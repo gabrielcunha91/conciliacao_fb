@@ -258,16 +258,19 @@ ORDER BY tm.`DATA` DESC
 """
 
 GET_TESOURARIA = """
-SELECT
-ttt.ID as 'tes_ID',
-te.ID as 'ID_Casa',
-te.NOME_FANTASIA as 'Casa',
+SELECT 
+ttt.ID as 'ID_Transacao_Tesouraria',
+te2.ID as 'ID_Casa',
+te2.NOME_FANTASIA as 'Casa',
+ttt.FK_EMPRESA_TESOURARIA as 'ID_Empresa_Tesouraria',
+te.NOME_FANTASIA as 'Empresa_Tesouraria',
 ttt.DATA_TRANSACAO as 'Data_Transacao',
 ttt.VALOR as 'Valor',
 ttt.DESCRICAO as 'Descricao'
 FROM T_TESOURARIA_TRANSACOES ttt 
-INNER JOIN T_EMPRESAS te ON (ttt.FK_LOJA = te.ID)
-ORDER BY ttt.DATA_TRANSACAO DESC
+LEFT JOIN T_EMPRESAS te ON (ttt.FK_EMPRESA_TESOURARIA = te.ID)
+LEFT JOIN T_EMPRESAS te2 ON (ttt.FK_LOJA = te2.ID)
+ORDER BY ttt.ID DESC
 """
 
 GET_AJUSTES_CONCILIACAO = """
