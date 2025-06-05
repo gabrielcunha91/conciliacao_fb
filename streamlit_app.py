@@ -221,8 +221,10 @@ def run():
     if "df_ajustes_conciliacao" not in st.session_state:
         st.session_state["df_ajustes_conciliacao"] = df_ajustes_conciliacao    
 
+
     if "df_bloqueios_judiciais" not in st.session_state:
         st.session_state["df_bloqueios_judiciais"] = df_bloqueios_judiciais
+
 
 
 if __name__ == "__main__":
