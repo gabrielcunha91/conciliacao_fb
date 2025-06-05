@@ -180,6 +180,21 @@ st.dataframe(df_ajustes_conciliacao_filtrada, use_container_width=True, hide_ind
 
 st.divider()
 
+## Bloqueios Judiciais
+st.subheader("Bloqueios Judiciais")
+
+df_bloqueios_judiciais = st.session_state["df_bloqueios_judiciais"]
+df_bloqueios_judiciais_filtrada = df_bloqueios_judiciais[df_bloqueios_judiciais['ID_Casa'] == id_casa]
+if able_date_filter:
+    df_bloqueios_judiciais_filtrada = df_bloqueios_judiciais_filtrada[(df_bloqueios_judiciais_filtrada["Data_Transacao"] >= start_date) & (df_bloqueios_judiciais_filtrada["Data_Transacao"] <= end_date)] 
+else:
+    df_bloqueios_judiciais_filtrada = df_bloqueios_judiciais_filtrada
+st.dataframe(df_bloqueios_judiciais_filtrada, use_container_width=True, hide_index=True)
+
+st.divider()    
+
+
+
 
 ## Exportando em Excel
 
@@ -216,7 +231,9 @@ if st.button('Atualizar Planilha Excel'):
   sheet_name_ajustes_conciliacao = 'df_ajustes_conciliaco'
   export_to_excel(df_ajustes_conciliacao_filtrada, sheet_name_ajustes_conciliacao, excel_filename)
   
-  
+  sheet_name_bloqueios_judiciais = 'df_bloqueios_judiciais'
+  export_to_excel(df_bloqueios_judiciais_filtrada, sheet_name_bloqueios_judiciais, excel_filename)  
+
   st.success('Arquivo atualizado com sucesso!')
 
 

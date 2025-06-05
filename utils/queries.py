@@ -284,4 +284,18 @@ FROM T_AJUSTES_CONCILIACAO tac
 INNER JOIN T_EMPRESAS te ON (tac.FK_EMPRESA = te.ID)
 """
 
+GET_BLOQUEIOS_JUDICIAIS = """
+SELECT
+tbj.ID as 'ID_Bloqueio',
+te.ID as 'ID_Casa',
+te.NOME_FANTASIA as 'Casa',
+tbj.DATA_TRANSACAO as 'Data_Transacao',
+tbj.VALOR as 'Valor',
+tbj.OBSERVACAO as 'Observacao'
+FROM T_BLOQUEIOS_JUDICIAIS tbj 
+LEFT JOIN T_EMPRESAS te ON (tbj.FK_EMPRESA = te.ID)
+"""
+
+
+
 

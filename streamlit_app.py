@@ -168,7 +168,19 @@ def run():
         df_ajustes_conciliacao['Data_Ajuste'] = pd.to_datetime(df_ajustes_conciliacao['Data_Ajuste'], errors='coerce') 
 
         return df_ajustes_conciliacao
-    df_ajustes_conciliacao = ajustes_conciliacao()         
+    df_ajustes_conciliacao = ajustes_conciliacao()
+
+    def bloqueios_judiciais():
+        result, column_names = execute_query(GET_BLOQUEIOS_JUDICIAIS, conn_fb)
+        df_bloqueios_judiciais = pd.DataFrame(result, columns=column_names)
+
+        df_bloqueios_judiciais['Data_Transacao'] = pd.to_datetime(df_bloqueios_judiciais['Data_Transacao'], errors='coerce') 
+
+        return df_bloqueios_judiciais
+    df_bloqueios_judiciais = bloqueios_judiciais()  
+
+
+
 
     ######## Definindo Relatorio ########
     st.write("# Conciliacao FB")
@@ -207,7 +219,11 @@ def run():
         st.session_state["df_tesouraria"] = df_tesouraria  
 
     if "df_ajustes_conciliacao" not in st.session_state:
-        st.session_state["df_ajustes_conciliacao"] = df_ajustes_conciliacao                                                        
+        st.session_state["df_ajustes_conciliacao"] = df_ajustes_conciliacao    
+
+    if "df_bloqueios_judiciais" not in st.session_state:
+        st.session_state["df_bloqueios_judiciais"] = df_bloqueios_judiciais
+
 
 if __name__ == "__main__":
      ######## Config Pag ##########
