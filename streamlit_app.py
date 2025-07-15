@@ -187,7 +187,7 @@ def run():
 
     st.markdown(
         """
-        Utilize as abas localizadas no lado esquerdo para buscar suas análises.
+        Utilize as abas localizadas no lado esquerdo para buscar suas análises de conciliacao.
     """
     ) 
 
